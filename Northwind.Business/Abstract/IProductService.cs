@@ -1,13 +1,14 @@
-﻿using Northwind.Entities.Concrete;
+﻿using Northwind.Core.Utilities.Results.Abstract;
+using Northwind.Entities.Concrete;
 
 namespace Northwind.Business.Abstract;
 
 public interface IProductService
 {
-	Product GetById(int productId);
-	List<Product> GetAll();
-	List<Product> GetListByCategory(int categoryId);
-	void Add(Product product);
-	void Update(Product product);
-	void Delete(Product product);
+	IDataResult<Product> GetById(int productId);
+	IDataResult<List<Product>> GetAll();
+	IDataResult<List<Product>> GetListByCategory(int categoryId);
+	IResult Add(Product product);
+	IResult Update(Product product);
+	IResult Delete(Product product);
 }

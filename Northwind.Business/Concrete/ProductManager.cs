@@ -1,4 +1,6 @@
 ﻿using Northwind.Business.Abstract;
+using Northwind.Core.Utilities.Results.Abstract;
+using Northwind.Core.Utilities.Results.Concrete;
 using Northwind.DataAccess.Abstract;
 using Northwind.Entities.Concrete;
 
@@ -13,34 +15,36 @@ public class ProductManager : IProductService
 		_productDal = productDal;
 	}
 
-	public void Add(Product product)
+	public IResult Add(Product product)
 	{
 		_productDal.Add(product);
+		return new SuccessResult("Ürün başarıyla eklendi.");
 	}
 
-	public void Delete(Product product)
-	{
-		_productDal.Delete(product);
-	}
-
-	public List<Product> GetAll()
-	{
-		return _productDal.GetList().ToList();
-	}
-
-	public Product GetById(int productId)
-	{
-		return _productDal.Get(p => p.ProductId.Equals(productId));
-	}
-
-	public List<Product> GetListByCategory(int categoryId)
-	{
-		return _productDal.GetList(c => c.CategoryId.Equals(categoryId)).ToList();
-
-	}
-
-	public void Update(Product product)
+	public IResult Update(Product product)
 	{
 		_productDal.Update(product);
+		return new SuccessResult("Ürün başarıyla güncellendi.");
+	}
+
+	public IResult Delete(Product product)
+	{
+		_productDal.Delete(product);
+		return new SuccessResult("Ürün başarıyla silindi.");
+	}
+
+	public IDataResult<List<Product>> GetAll()
+	{
+		return new SuccessDataResult<List<Product>>(_productDal.GetList().ToList());
+	}
+
+	public IDataResult<Product> GetById(int productId)
+	{
+		return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId.Equals(productId)));
+	}
+
+	public IDataResult<List<Product>> GetListByCategory(int categoryId)
+	{
+		return new SuccessDataResult<List<Product>>(_productDal.GetList(c => c.CategoryId.Equals(categoryId)).ToList());
 	}
 }
