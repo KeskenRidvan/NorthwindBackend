@@ -25,7 +25,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 #region Jwt Configuration
 builder.Services.AddCors(options =>
 {
-	options.AddPolicy("AllowOrigin", builder => builder.WithOrigins("https://localhost:7014")); // Canliya alindiginda buraya domain adresi yazilacak.
+	options.AddPolicy("AllowOrigin", builder => builder.WithOrigins("https://localhost:7056")); // Canliya alindiginda buraya domain adresi yazilacak.
 });
 
 TokenOptions? tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
