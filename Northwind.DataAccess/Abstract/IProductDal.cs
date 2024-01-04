@@ -1,6 +1,9 @@
-﻿namespace Northwind.DataAccess.Abstract;
+﻿using Northwind.Core.DataAccess.Abstract;
+using Northwind.Entities.Concrete;
 
-public interface IProductDal
+namespace Northwind.DataAccess.Abstract;
+
+public interface IProductDal : IEntityRepository<Product>
 {
 
 }
