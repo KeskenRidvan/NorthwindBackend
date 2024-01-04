@@ -19,4 +19,14 @@ public static class Messages
 	public static string CategoryListed = "Kategori listelendi!";
 	#endregion
 
+
+	#region User
+	public static string UserOrPasswordError = "Kullanıcı Şifresi Veya Emaili Hatalı!";
+	public static string SuccessfullLogin = "Kullanıcı Girişi Başarılı!";
+	public static string UserAlreadyExists = "Kullanıcı Zaten Mevcut!";
+	public static string UserRegistered = "Kullanıcı Başarıyla Kaydedildi!";
+	#endregion
+
+	public static string AccessTokenCreated = "Access Token Başarıyla Oluşturuldu!";
+
 }

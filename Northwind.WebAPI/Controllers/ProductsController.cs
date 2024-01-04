@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Northwind.Business.Abstract;
 using Northwind.Entities.Concrete;
 
@@ -46,6 +47,7 @@ public class ProductsController : ControllerBase
 	}
 
 	[HttpPost("add")]
+	[Authorize(Roles = "Product.Add")]
 	public IActionResult Add(Product product)
 	{
 		var result = _productService.Add(product);
