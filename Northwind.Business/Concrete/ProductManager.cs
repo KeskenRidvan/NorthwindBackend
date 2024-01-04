@@ -1,4 +1,7 @@
 ﻿using Northwind.Business.Abstract;
+using Northwind.Business.Constants;
+using Northwind.Core.Utilities.Results.Abstract;
+using Northwind.Core.Utilities.Results.Concrete;
 using Northwind.DataAccess.Abstract;
 using Northwind.Entities.Concrete;
 
@@ -13,34 +16,36 @@ public class ProductManager : IProductService
 		_productDal = productDal;
 	}
 
-	public void Add(Product product)
+	public IResult Add(Product product)
 	{
 		_productDal.Add(product);
+		return new SuccessResult(Messages.ProductAdded);
 	}
 
-	public void Delete(Product product)
-	{
-		_productDal.Delete(product);
-	}
-
-	public List<Product> GetAll()
-	{
-		return _productDal.GetList().ToList();
-	}
-
-	public Product GetById(int productId)
-	{
-		return _productDal.Get(p => p.ProductId.Equals(productId));
-	}
-
-	public List<Product> GetListByCategory(int categoryId)
-	{
-		return _productDal.GetList(c => c.CategoryId.Equals(categoryId)).ToList();
-
-	}
-
-	public void Update(Product product)
+	public IResult Update(Product product)
 	{
 		_productDal.Update(product);
+		return new SuccessResult(Messages.ProductUpdated);
+	}
+
+	public IResult Delete(Product product)
+	{
+		_productDal.Delete(product);
+		return new SuccessResult(Messages.ProductDeleted);
+	}
+
+	public IDataResult<List<Product>> GetAll()
+	{
+		return new SuccessDataResult<List<Product>>(_productDal.GetList().ToList(), Messages.ProductsListed);
+	}
+
+	public IDataResult<Product> GetById(int productId)
+	{
+		return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId.Equals(productId)), Messages.ProductListed);
+	}
+
+	public IDataResult<List<Product>> GetListByCategory(int categoryId)
+	{
+		return new SuccessDataResult<List<Product>>(_productDal.GetList(c => c.CategoryId.Equals(categoryId)).ToList(), Messages.ProductsListedByCategory);
 	}
 }
