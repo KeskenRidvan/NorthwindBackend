@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using Northwind.Business.Abstract;
 using Northwind.Business.Concrete;
+using Northwind.Core.Utilities.Security.JWT.Abstract;
+using Northwind.Core.Utilities.Security.JWT.Concrete;
 using Northwind.DataAccess.Abstract;
 using Northwind.DataAccess.Concrete.EntityFramework;
 
@@ -18,5 +20,11 @@ public class AutofacBusinessModule : Module
 
 		builder.RegisterType<UserManager>().As<IUserService>();
 		builder.RegisterType<EfUserDal>().As<IUserDal>();
+
+		builder.RegisterType<AuthManager>().As<IAuthService>();
+		builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+
+
+
 	}
 }
