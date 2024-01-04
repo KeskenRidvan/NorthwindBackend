@@ -10,4 +10,5 @@ public class AppDbContext : DbContext
 		optionsBuilder.UseSqlServer(@"Server=(localdb)\UDEMY;Database=Eng.Northwind;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
 	}
 	public DbSet<Product> Products { get; set; }
+	public DbSet<Category> Categories { get; set; }
 }
