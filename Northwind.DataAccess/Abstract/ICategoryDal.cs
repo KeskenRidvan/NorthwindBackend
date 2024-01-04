@@ -3,7 +3,6 @@ using Northwind.Entities.Concrete;
 
 namespace Northwind.DataAccess.Abstract;
 
-public interface IProductDal : IEntityRepositoryBase<Product>
+public interface ICategoryDal : IEntityRepositoryBase<Category>
 {
-
 }

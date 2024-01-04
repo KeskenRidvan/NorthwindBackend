@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Northwind.Core.DataAccess.Concrete.EntityFramework;
 
-public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>
+public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepositoryBase<TEntity>
 where TEntity : class, IEntity, new()
 where TContext : DbContext, new()
 {
