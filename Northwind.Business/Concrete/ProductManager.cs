@@ -1,6 +1,7 @@
 ﻿using Northwind.Business.Abstract;
 using Northwind.Business.Constants;
 using Northwind.Business.ValidationRules.FluentValidation;
+using Northwind.Core.Aspect.Autofac.Caching;
 using Northwind.Core.Aspect.Autofac.Validation;
 using Northwind.Core.Utilities.Results.Abstract;
 using Northwind.Core.Utilities.Results.Concrete;
@@ -47,6 +48,7 @@ public class ProductManager : IProductService
 		return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId.Equals(productId)), Messages.ProductListed);
 	}
 
+	[CacheAspect(duration: 1)]
 	public IDataResult<List<Product>> GetListByCategory(int categoryId)
 	{
 		return new SuccessDataResult<List<Product>>(_productDal.GetList(c => c.CategoryId.Equals(categoryId)).ToList(), Messages.ProductsListedByCategory);
