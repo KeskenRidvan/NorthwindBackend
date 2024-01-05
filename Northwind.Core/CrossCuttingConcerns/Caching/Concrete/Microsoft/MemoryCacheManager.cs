@@ -44,8 +44,7 @@ public class MemoryCacheManager : ICacheManager
 		var keysToRemove = cacheCollectionValues.Where(d => regex.IsMatch(d.Key.ToString())).Select(d => d.Key).ToList();
 
 		foreach (var key in keysToRemove)
-		{
 			_cache.Remove(key);
-		}
+
 	}
 }
