@@ -3,6 +3,9 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Northwind.Business.DependencyResolvers.Autofac;
+using Northwind.Core.DependencyResolvers;
+using Northwind.Core.Extensions;
+using Northwind.Core.Utilities.IoC.Abstract;
 using Northwind.Core.Utilities.Security.Encyption;
 using Northwind.Core.Utilities.Security.JWT.Concrete;
 
@@ -19,6 +22,11 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 {
 	builder.RegisterModule(new AutofacBusinessModule());
+});
+
+builder.Services.AddDependencyResolvers(new ICoreModule[]
+{
+	new CoreModule(),
 });
 
 
