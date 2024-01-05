@@ -1,4 +1,4 @@
-﻿namespace Northwind.Core.CrossCuttingConcerns.Caching;
+﻿namespace Northwind.Core.CrossCuttingConcerns.Caching.Abstract;
 
 public interface ICacheManager
 {
