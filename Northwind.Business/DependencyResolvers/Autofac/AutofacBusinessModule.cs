@@ -3,11 +3,13 @@ using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
 using Northwind.Business.Abstract;
 using Northwind.Business.Concrete;
+using Northwind.Core.Utilities.Interceptors.Autofac.Concrete;
 using Northwind.Core.Utilities.Security.JWT.Abstract;
 using Northwind.Core.Utilities.Security.JWT.Concrete;
 using Northwind.DataAccess.Abstract;
 using Northwind.DataAccess.Concrete.EntityFramework;
 using System.Reflection;
+using Module = Autofac.Module;
 
 namespace Northwind.Business.DependencyResolvers.Autofac;
 
