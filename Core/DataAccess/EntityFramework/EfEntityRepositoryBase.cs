@@ -36,7 +36,7 @@ public class EfEntityRepositoryBase<TEntity, TContext>
 		}
 	}
 
-	public IList<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
+	public IList<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null)
 	{
 		using (var context = new TContext())
 		{
