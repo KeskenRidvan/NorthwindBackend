@@ -12,4 +12,10 @@ public static class Messages
 	public static string UserAdded = "Kullanıcı başarıyla eklendi!";
 	public static string UserDeleted = "Kullanıcı başarıyla silindi!";
 	public static string UserUpdated = "Kullanıcı başarıyla güncellendi!";
+
+	public static string UserOrPasswordError = "Kullanıcı Şifresi Veya Emaili Hatalı!";
+	public static string SuccessfullLogin = "Kullanıcı Girişi Başarılı!";
+	public static string UserAlreadyExists = "Kullanıcı Zaten Mevcut!";
+	public static string UserRegistered = "Kullanıcı Başarıyla Kaydedildi!";
+	public static string AccessTokenCreated = "Access Token Başarıyla Oluşturuldu!";
 }
