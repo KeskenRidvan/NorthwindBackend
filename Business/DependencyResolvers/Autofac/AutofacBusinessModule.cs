@@ -11,5 +11,8 @@ public class AutofacBusinessModule : Module
 	{
 		builder.RegisterType<EfProductDal>().As<IProductDal>();
 		builder.RegisterType<ProductManager>().As<IProductService>();
+
+		builder.RegisterType<EfCategoryDal>().As<ICategoryDal>();
+		builder.RegisterType<CategoryManager>().As<ICategoryService>();
 	}
 }
