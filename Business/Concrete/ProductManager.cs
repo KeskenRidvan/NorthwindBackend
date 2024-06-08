@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
@@ -12,35 +14,41 @@ public class ProductManager : IProductService
 		_productDal = productDal;
 	}
 
-	public void Add(Product product)
+	public IResult Add(Product product)
 	{
 		_productDal.Add(product);
+		return new SuccessResult(message: Messages.ProductAdded);
 	}
 
-	public void Delete(Product product)
+	public IResult Delete(Product product)
 	{
 		_productDal.Delete(product);
+		return new SuccessResult(message: Messages.ProductDeleted);
 	}
 
-	public Product GetById(int productId)
+	public IDataResult<Product> GetById(int productId)
 	{
-		return _productDal.Get(
-			filter: p => p.ProductId.Equals(productId));
+		return new SuccessDataResult<Product>(
+		data: _productDal.Get(
+			filter: p => p.ProductId.Equals(productId)));
 	}
 
-	public List<Product> GetList()
+	public IDataResult<List<Product>> GetList()
 	{
-		return _productDal.GetList().ToList();
+		return new SuccessDataResult<List<Product>>(
+		data: _productDal.GetList().ToList());
 	}
 
-	public List<Product> GetListByCategory(int categoryId)
+	public IDataResult<List<Product>> GetListByCategory(int categoryId)
 	{
-		return _productDal.GetList(
-			filter: p => p.CategoryId.Equals(categoryId)).ToList();
+		return new SuccessDataResult<List<Product>>(
+		data: _productDal.GetList(
+				filter: p => p.CategoryId.Equals(categoryId)).ToList());
 	}
 
-	public void Update(Product product)
+	public IResult Update(Product product)
 	{
 		_productDal.Update(product);
+		return new SuccessResult(message: Messages.ProductUpdated);
 	}
 }
