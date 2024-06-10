@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Transaction;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -14,12 +15,14 @@ public class CategoryManager : ICategoryService
 		_categoryDal = categoryDal;
 	}
 
+	[TransactionScopeAspect]
 	public IResult Add(Category category)
 	{
 		_categoryDal.Add(category);
 		return new SuccessResult(message: Messages.CategoryAdded);
 	}
 
+	[TransactionScopeAspect]
 	public IResult Delete(Category category)
 	{
 		_categoryDal.Delete(category);
@@ -39,6 +42,7 @@ public class CategoryManager : ICategoryService
 		data: _categoryDal.GetList().ToList());
 	}
 
+	[TransactionScopeAspect]
 	public IResult Update(Category category)
 	{
 		_categoryDal.Update(category);
