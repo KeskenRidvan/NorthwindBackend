@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Transaction;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -16,6 +17,7 @@ public class CategoryManager : ICategoryService
 	}
 
 	[TransactionScopeAspect]
+	[CacheRemoveAspect(pattern: "ICategoryService.Get")]
 	public IResult Add(Category category)
 	{
 		_categoryDal.Add(category);
@@ -23,6 +25,7 @@ public class CategoryManager : ICategoryService
 	}
 
 	[TransactionScopeAspect]
+	[CacheRemoveAspect(pattern: "ICategoryService.Get")]
 	public IResult Delete(Category category)
 	{
 		_categoryDal.Delete(category);
@@ -36,6 +39,7 @@ public class CategoryManager : ICategoryService
 			filter: p => p.CategoryId.Equals(categoryId)));
 	}
 
+	[CacheAspect(duration: 1)]
 	public IDataResult<List<Category>> GetList()
 	{
 		return new SuccessDataResult<List<Category>>(
@@ -43,6 +47,7 @@ public class CategoryManager : ICategoryService
 	}
 
 	[TransactionScopeAspect]
+	[CacheRemoveAspect(pattern: "ICategoryService.Get")]
 	public IResult Update(Category category)
 	{
 		_categoryDal.Update(category);
