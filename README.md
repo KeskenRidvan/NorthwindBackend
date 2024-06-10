@@ -14,3 +14,14 @@
 - Efficient JWT configuration
 - Writing Extension
 
+## What I learned in Course 2:
+
+- Aspect-Oriented Programming (AOP) and Cross-Cutting Concerns
+- Validation Rules
+- Fluent Validation Implementation
+- Dynamic Proxy
+- Interceptor Implementation
+- AOP - Validation
+- AOP - Transaction
+- AOP - Caching
+- Service Collection Extension
