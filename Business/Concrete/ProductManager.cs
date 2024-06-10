@@ -1,5 +1,9 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Transaction;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -14,12 +18,17 @@ public class ProductManager : IProductService
 		_productDal = productDal;
 	}
 
+	[TransactionScopeAspect]
+	[ValidationAspect(typeof(ProductValidator), Priority = 1)]
+	[CacheRemoveAspect(pattern: "IProductService.Get")]
 	public IResult Add(Product product)
 	{
 		_productDal.Add(product);
 		return new SuccessResult(message: Messages.ProductAdded);
 	}
 
+	[TransactionScopeAspect]
+	[CacheRemoveAspect(pattern: "IProductService.Get")]
 	public IResult Delete(Product product)
 	{
 		_productDal.Delete(product);
@@ -33,12 +42,14 @@ public class ProductManager : IProductService
 			filter: p => p.ProductId.Equals(productId)));
 	}
 
+	[CacheAspect(duration: 1)]
 	public IDataResult<List<Product>> GetList()
 	{
 		return new SuccessDataResult<List<Product>>(
 		data: _productDal.GetList().ToList());
 	}
 
+	[CacheAspect(duration: 1)]
 	public IDataResult<List<Product>> GetListByCategory(int categoryId)
 	{
 		return new SuccessDataResult<List<Product>>(
@@ -46,6 +57,8 @@ public class ProductManager : IProductService
 				filter: p => p.CategoryId.Equals(categoryId)).ToList());
 	}
 
+	[TransactionScopeAspect]
+	[CacheRemoveAspect(pattern: "IProductService.Get")]
 	public IResult Update(Product product)
 	{
 		_productDal.Update(product);
