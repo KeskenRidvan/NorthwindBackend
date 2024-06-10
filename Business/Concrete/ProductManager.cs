@@ -38,22 +38,22 @@ public class ProductManager : IProductService
 	public IDataResult<Product> GetById(int productId)
 	{
 		return new SuccessDataResult<Product>(
-		data: _productDal.Get(
-			filter: p => p.ProductId.Equals(productId)));
+			data: _productDal.Get(
+				filter: p => p.ProductId.Equals(productId)));
 	}
 
 	[CacheAspect(duration: 1)]
 	public IDataResult<List<Product>> GetList()
 	{
 		return new SuccessDataResult<List<Product>>(
-		data: _productDal.GetList().ToList());
+			data: _productDal.GetList().ToList());
 	}
 
 	[CacheAspect(duration: 1)]
 	public IDataResult<List<Product>> GetListByCategory(int categoryId)
 	{
 		return new SuccessDataResult<List<Product>>(
-		data: _productDal.GetList(
+			data: _productDal.GetList(
 				filter: p => p.CategoryId.Equals(categoryId)).ToList());
 	}
 

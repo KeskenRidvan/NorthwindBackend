@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Transaction;
@@ -39,7 +40,8 @@ public class CategoryManager : ICategoryService
 			filter: p => p.CategoryId.Equals(categoryId)));
 	}
 
-	[CacheAspect(duration: 1)]
+	[SecuredOperation("Product.List,Admin")]
+	[CacheAspect(duration: 5)]
 	public IDataResult<List<Category>> GetList()
 	{
 		return new SuccessDataResult<List<Category>>(
