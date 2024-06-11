@@ -2,8 +2,11 @@
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
+using Core.CrosCuttingConcerns.Logging.Log4Net.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -38,22 +41,25 @@ public class ProductManager : IProductService
 	public IDataResult<Product> GetById(int productId)
 	{
 		return new SuccessDataResult<Product>(
-		data: _productDal.Get(
-			filter: p => p.ProductId.Equals(productId)));
+			data: _productDal.Get(
+				filter: p => p.ProductId.Equals(productId)));
 	}
 
+	[PerformanceAspect(interval: 5)]
 	[CacheAspect(duration: 1)]
 	public IDataResult<List<Product>> GetList()
 	{
+		//Thread.Sleep(5000);
 		return new SuccessDataResult<List<Product>>(
-		data: _productDal.GetList().ToList());
+			data: _productDal.GetList().ToList());
 	}
 
 	[CacheAspect(duration: 1)]
+	[LogAspect(typeof(FileLogger))]
 	public IDataResult<List<Product>> GetListByCategory(int categoryId)
 	{
 		return new SuccessDataResult<List<Product>>(
-		data: _productDal.GetList(
+			data: _productDal.GetList(
 				filter: p => p.CategoryId.Equals(categoryId)).ToList());
 	}
 

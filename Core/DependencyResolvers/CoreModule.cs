@@ -1,6 +1,8 @@
 ﻿using Core.CrosCuttingConcerns.Caching;
 using Core.IoC;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 
 namespace Core.DependencyResolvers;
 public class CoreModule : ICoreModule
@@ -9,5 +11,7 @@ public class CoreModule : ICoreModule
 	{
 		services.AddMemoryCache();
 		services.AddSingleton<ICacheManager, MemoryCacheManager>();
+		services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+		services.AddSingleton<Stopwatch>();
 	}
 }
