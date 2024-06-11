@@ -13,6 +13,7 @@
 - Effective Role management system infrastructure
 - Efficient JWT configuration
 - Writing Extension
+<hr/>
 
 ## What I learned in Course 2:
 
@@ -25,3 +26,11 @@
 - AOP - Transaction
 - AOP - Caching
 - Service Collection Extension
+<hr/>
+
+## What I learned in Course 3:
+- AOP and Cross Cutting Infrastructures.
+- Create a role-based professional system.
+- AOP - Authorization.
+- AOP- Write Performance.
+- AOP- Logging.
