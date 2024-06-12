@@ -4,6 +4,7 @@ public static class Messages
 	public static string ProductAdded = "Ürün başarıyla eklendi!";
 	public static string ProductDeleted = "Ürün başarıyla silindi!";
 	public static string ProductUpdated = "Ürün başarıyla güncellendi!";
+	public static string ProductNameAlreadyExists = "Ürün ismi zaten mevcut!";
 
 	public static string CategoryAdded = "Kategori başarıyla eklendi!";
 	public static string CategoryDeleted = "Kategori başarıyla silindi!";
@@ -19,5 +20,6 @@ public static class Messages
 	public static string UserRegistered = "Kullanıcı Başarıyla Kaydedildi!";
 	public static string AccessTokenCreated = "Access Token Başarıyla Oluşturuldu!";
 
-	public static string AuthorizationDenied = "Yetkiniz Yok!";	
+	public static string AuthorizationDenied = "Yetkiniz Yok!";
+
 }

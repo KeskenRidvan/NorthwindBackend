@@ -76,6 +76,7 @@ public class Program
 			});
 		}
 
+		app.ConfigureCustomExceptionMiddleware();
 		app.UseHttpsRedirection();
 
 		app.UseAuthentication(); // -> Jwt Configuration

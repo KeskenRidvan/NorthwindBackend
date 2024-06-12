@@ -14,7 +14,7 @@ public class TransactionScopeAspect : MethodInterception
 				invocation.Proceed();
 				transactionScope.Complete();
 			}
-			catch (Exception ex)
+			catch (System.Exception ex)
 			{
 				transactionScope.Dispose();
 				throw;
