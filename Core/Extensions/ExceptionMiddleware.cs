@@ -30,10 +30,10 @@ public class ExceptionMiddleware
 		httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
 		string message = "Internal Server Error";
+
 		if (exception.GetType().Equals(typeof(ValidationException)))
-		{
 			message = exception.Message;
-		}
+
 
 		return httpContext.Response.WriteAsync(new ErrorDetails
 		{

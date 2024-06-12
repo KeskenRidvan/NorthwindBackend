@@ -7,6 +7,7 @@ using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.CrosCuttingConcerns.Logging.Log4Net.Loggers;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -15,10 +16,14 @@ namespace Business.Concrete;
 public class ProductManager : IProductService
 {
 	private readonly IProductDal _productDal;
+	private readonly ICategoryService _categoryService;
 
-	public ProductManager(IProductDal productDal)
+	public ProductManager(
+		IProductDal productDal,
+		ICategoryService categoryService)
 	{
 		_productDal = productDal;
+		_categoryService = categoryService;
 	}
 
 	[TransactionScopeAspect]
@@ -26,6 +31,13 @@ public class ProductManager : IProductService
 	[CacheRemoveAspect(pattern: "IProductService.Get")]
 	public IResult Add(Product product)
 	{
+		IResult result = BusinessRules.Run(
+			CheckIfProductNameExists(product.ProductName),
+			CheckIfCategoryIsEnabled());
+
+		if (result is not null)
+			return result;
+
 		_productDal.Add(product);
 		return new SuccessResult(message: Messages.ProductAdded);
 	}
@@ -69,5 +81,27 @@ public class ProductManager : IProductService
 	{
 		_productDal.Update(product);
 		return new SuccessResult(message: Messages.ProductUpdated);
+	}
+
+
+	private IResult CheckIfProductNameExists(string productName)
+	{
+
+		var result = _productDal
+			.GetList(p => p.ProductName.Equals(productName))
+			.Any();
+
+		if (result)
+			return new ErrorResult(Messages.ProductNameAlreadyExists);
+
+		return new SuccessResult();
+	}
+	private IResult CheckIfCategoryIsEnabled()
+	{
+		var result = _categoryService.GetList();
+		if (result.Data.Count < 10)
+			return new ErrorResult(Messages.ProductNameAlreadyExists);
+
+		return new SuccessResult();
 	}
 }
