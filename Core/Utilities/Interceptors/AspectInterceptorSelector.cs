@@ -1,4 +1,6 @@
 ﻿using Castle.DynamicProxy;
+using Core.Aspects.Autofac.Exception;
+using Core.CrosCuttingConcerns.Logging.Log4Net.Loggers;
 using System.Reflection;
 
 namespace Core.Utilities.Interceptors;
@@ -18,6 +20,8 @@ public class AspectInterceptorSelector : IInterceptorSelector
 			.GetCustomAttributes<MethodInterceptionBaseAttribute>(inherit: true);
 
 		classAttributes.AddRange(methodAttributes);
+		classAttributes.Add(new ExceptionLogAspect(typeof(FileLogger)));
+		//classAttributes.Add(new ExceptionLogAspect(typeof(DatabaseLogger)));
 
 		return classAttributes.OrderBy(x => x.Priority).ToArray();
 	}

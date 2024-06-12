@@ -4,12 +4,12 @@ using Core.CrosCuttingConcerns.Logging.Log4Net;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Messages;
 
-namespace Core.Aspects.Autofac.Logging;
-public class LogAspect : MethodInterception
+namespace Core.Aspects.Autofac.Exception;
+public class ExceptionLogAspect : MethodInterception
 {
 	private LoggerServiceBase _loggerServiceBase;
 
-	public LogAspect(Type loggerService)
+	public ExceptionLogAspect(Type loggerService)
 	{
 		if (!loggerService.BaseType.Equals(typeof(LoggerServiceBase)))
 			throw new System.Exception(AspectMessages.WrongLoggerType);
@@ -17,15 +17,18 @@ public class LogAspect : MethodInterception
 		_loggerServiceBase =
 			(LoggerServiceBase)Activator.CreateInstance(loggerService);
 	}
-
-	protected override void OnBefore(IInvocation invocation)
+	protected override void OnException(IInvocation invocation, System.Exception exception)
 	{
-		_loggerServiceBase.Info(GetLogDetail(invocation));
+		LogDetailWithException logDetailWithException = GetLogDetail(invocation);
+		logDetailWithException.ExceptionMessage = exception.Message;
+
+		_loggerServiceBase.Error(logDetailWithException);
 	}
 
-	private LogDetail GetLogDetail(IInvocation invocation)
+	private LogDetailWithException GetLogDetail(IInvocation invocation)
 	{
 		var logParameters = new List<LogParameter>();
+
 		for (int i = 0; i < invocation.Arguments.Length; i++)
 		{
 			logParameters.Add(new LogParameter
@@ -36,12 +39,12 @@ public class LogAspect : MethodInterception
 			});
 		}
 
-		var logDetail = new LogDetail
+		var logDetailWithException = new LogDetailWithException
 		{
 			MethodName = invocation.Method.Name,
 			LogParameters = logParameters
 		};
 
-		return logDetail;
+		return logDetailWithException;
 	}
 }
